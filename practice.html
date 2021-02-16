@@ -35,7 +35,7 @@
             <div class="col-md-4">
                 <div class="withdraw status">
                     <h5>Withdraw</h5>
-                    <h2>$00</h2>
+                    <h2>$ <span id="currentWithdraw">00</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
@@ -78,8 +78,7 @@
         // deposit button event handler
         const depositBtn= document.getElementById('addDeposit');
         depositBtn.addEventListener('click', function () {
-            const depositAmount = document.getElementById('depositAmount').value;
-            const depositNumber = parseFloat(depositAmount);
+            const depositNumber = inputNumbers('depositAmount');
 
             updateSpanText('currentDeposit',depositNumber);
             updateSpanText('currentBalance',depositNumber);
@@ -90,19 +89,23 @@
         // Withdraw button handler
         const withdrawBtn = document.getElementById('addWithdraw');
         withdrawBtn.addEventListener('click', function () {
-            const withdrawAmount= inputNumbers('withdrawAmount');
-            console.log(withdrawAmount)
+            const withdrawNumber= inputNumbers('withdrawAmount');
+
+            updateSpanText('currentWithdraw',withdrawNumber);
+            updateSpanText('currentBalance',-1*withdrawNumber);
+
+            document.getElementById('withdrawAmount').value= '';
         })
 
         function inputNumbers(id) {
-            const withdrawAmount = document.getElementById(id).value;
-            const withdrawNumber = parseFloat(withdrawAmount);
-            return withdrawNumber;
+            const amount = document.getElementById(id).value;
+            const amountNumber = parseFloat(amount);
+            return amountNumber;
         }
-        function updateSpanText(id,depositNumber) {
+        function updateSpanText(id,addNumber) {
             const current = document.getElementById(id).innerText;
             const currentNumber = parseFloat(current);
-            const totalAmount = depositNumber+currentNumber;
+            const totalAmount = addNumber+currentNumber;
             document.getElementById(id).innerText = totalAmount;
         }
     </script>
